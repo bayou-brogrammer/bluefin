@@ -15,7 +15,7 @@ USER_SETUP_VER_FILE_V1="$HOME/.ublue-configured"
 if [[ -f $USER_SETUP_VER_FILE_V1 ]]; then
   echo "User setup v1 has already run. Exiting..."
   rm $USER_SETUP_VER_FILE_V1
-  echo $USER_SETUP_VER > $USER_SETUP_VER_FILE
+  echo $USER_SETUP_VER >$USER_SETUP_VER_FILE
   exit 0
 fi
 
@@ -26,7 +26,7 @@ if [[ -f $USER_SETUP_VER_FILE && $USER_SETUP_VER = $USER_SETUP_VER_RAN ]]; then
 fi
 
 IMAGE_INFO="/usr/share/ublue-os/image-info.json"
-IMAGE_NAME=$(jq -r '."image-name"' < $IMAGE_INFO)
+IMAGE_NAME=$(jq -r '."image-name"' <$IMAGE_INFO)
 
 # Enable NTP
 timedatectl set-ntp true
@@ -41,4 +41,4 @@ fi
 
 # Prevent future executions
 echo "Writing state file"
-echo $USER_SETUP_VER > $USER_SETUP_VER_FILE
+echo $USER_SETUP_VER >$USER_SETUP_VER_FILE

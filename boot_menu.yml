@@ -4,6 +4,7 @@ ublue_variants:
     flavors:
       - label: bluefin
         info: Bluefin
+        
   - label: ublue-os/bluefin-nvidia
     ks: /kickstart/ublue-os-nvidia.ks
     subvariants:
