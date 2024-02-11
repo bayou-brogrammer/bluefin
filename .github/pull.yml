@@ -4,3 +4,6 @@ rules:
     upstream: ublue-os:main
     mergeMethod: merge
     mergeUnstable: false
+
+conflictLabel: "merge-conflict"
+label: "chore(merge-upstream): :arrow_heading_down: pull"
