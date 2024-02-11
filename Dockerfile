@@ -189,7 +189,7 @@ RUN --mount=type=cache,target=/var/cache/bluefin-dx \
     # Install kns/kctx and add completions for Bash
     wget https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx -O /usr/bin/kubectx && \
     wget https://raw.githubusercontent.com/ahmetb/kubectx/master/kubens -O /usr/bin/kubens && \
-    chmod +x /usr/bin/kubectx /usr/bin/kubens
+    chmod +x /usr/bin/kubectx /usr/bin/kubens && \
 
     # Set up services
     systemctl disable pmie.service && \

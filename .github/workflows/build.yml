@@ -178,13 +178,13 @@ jobs:
           cosign sign -y --key env://COSIGN_PRIVATE_KEY ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }}@${TAGS}
         env:
           COSIGN_EXPERIMENTAL: false
-          TAGS: ${{ steps.build_push.outputs.digest }}
+          TAGS: ${{ steps.push.outputs.digest }}
           COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
 
       - name: Echo outputs
         if: github.event_name != 'pull_request'
         run: |
-          echo "${{ toJSON(steps.build_push.outputs) }}"
+          echo "${{ toJSON(steps.build_image.outputs) }}"
 
   check:
     name: Check all builds successful
