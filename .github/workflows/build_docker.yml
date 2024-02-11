@@ -16,6 +16,8 @@ on:
     branches:
       - bluefin-main
       - testing
+    tags:
+      - "v*.*.*"
     paths-ignore:
       - '**.md'
 
@@ -121,6 +123,8 @@ jobs:
         uses: docker/metadata-action@v5
         id: meta
         with:
+          flavor: |
+            latest=true
           images: |
             ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }}
           labels: |
@@ -131,9 +135,9 @@ jobs:
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/ublue-os/bluefin/bluefin/README.md
           # generate Docker tags based on the following events/attributes
           tags: |
-            type=sha 
-            type=schedule
-            type=semver,pattern={{major}}
+            type=sha
+            type=ref,event=branch
+            type=schedule,pattern=nightly
             type=semver,pattern={{version}}
 
       - name: Login to GitHub Container Registry
@@ -154,7 +158,8 @@ jobs:
           cache-to: type=gha,mode=max
           project: ${{ env.PROJECT_ID }}
           target: ${{ matrix.base_name }}
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           token: ${{ secrets.DEPOT_PROJECT_TOKEN }}
           build-args: |
@@ -196,8 +201,9 @@ jobs:
 
       - name: Echo outputs
         if: github.event_name != 'pull_request'
+        # echo "${{ toJSON(steps.build_push.outputs) }}"
         run: |
-          echo "${{ toJSON(steps.build_push.outputs) }}"
+          echo "${{ steps.build_push.outputs }}"
 
   check:
     name: Check all builds successful

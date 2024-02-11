@@ -10,5 +10,5 @@ rules:
     mergeMethod: merge
     mergeUnstable: false
 
-label: ":arrow_heading_down: pull"
 conflictLabel: "merge-conflict"
+label: "chore(merge-upstream): :arrow_heading_down: pull"
