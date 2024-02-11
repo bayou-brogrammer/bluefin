@@ -33,51 +33,51 @@ COPY usr/etc/ublue-update/ublue-update.toml /tmp/ublue-update.toml
 
 # Setup Copr repos
 RUN wget https://copr.fedorainfracloud.org/coprs/kylegospo/prompt/repo/fedora-$(rpm -E %fedora)/kylegospo-prompt-fedora-$(rpm -E %fedora).repo?arch=x86_64 -O /etc/yum.repos.d/_copr_kylegospo-prompt.repo && \
-    wget https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/repo/fedora-"${FEDORA_MAJOR_VERSION}"/kylegospo-gnome-vrr-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo && \
-    wget https://copr.fedorainfracloud.org/coprs/che/nerd-fonts/repo/fedora-"${FEDORA_MAJOR_VERSION}"/che-nerd-fonts-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/_copr_che-nerd-fonts-"${FEDORA_MAJOR_VERSION}".repo && \
-    wget https://copr.fedorainfracloud.org/coprs/ublue-os/staging/repo/fedora-"${FEDORA_MAJOR_VERSION}"/ublue-os-staging-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/ublue-os-staging-fedora-"${FEDORA_MAJOR_VERSION}".repo
+  wget https://copr.fedorainfracloud.org/coprs/kylegospo/gnome-vrr/repo/fedora-"${FEDORA_MAJOR_VERSION}"/kylegospo-gnome-vrr-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/_copr_kylegospo-gnome-vrr.repo && \
+  wget https://copr.fedorainfracloud.org/coprs/che/nerd-fonts/repo/fedora-"${FEDORA_MAJOR_VERSION}"/che-nerd-fonts-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/_copr_che-nerd-fonts-"${FEDORA_MAJOR_VERSION}".repo && \
+  wget https://copr.fedorainfracloud.org/coprs/ublue-os/staging/repo/fedora-"${FEDORA_MAJOR_VERSION}"/ublue-os-staging-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/ublue-os-staging-fedora-"${FEDORA_MAJOR_VERSION}".repo
 
 # Remove unneeded packages
 RUN --mount=type=cache,target=/var/cache/rpm-ostree \
-    rpm-ostree override remove \
-    power-profiles-daemon \
-    || true && \
-    rpm-ostree override remove \
-    tlp \
-    tlp-rdw \
-    || true
+  rpm-ostree override remove \
+  power-profiles-daemon \
+  || true && \
+  rpm-ostree override remove \
+  tlp \
+  tlp-rdw \
+  || true
 
 # Setup firmware and asusctl for ASUS devices
 RUN --mount=type=cache,target=/var/cache/asus-firmware \
-    if [[ "${IMAGE_FLAVOR}" =~ "asus" ]]; then \
-    wget https://copr.fedorainfracloud.org/coprs/lukenukem/asus-linux/repo/fedora-$(rpm -E %fedora)/lukenukem-asus-linux-fedora-$(rpm -E %fedora).repo -O /etc/yum.repos.d/_copr_lukenukem-asus-linux.repo && \
-    rpm-ostree install \
-    asusctl \
-    asusctl-rog-gui && \
-    git clone https://gitlab.com/asus-linux/firmware.git --depth 1 /tmp/asus-firmware && \
-    cp -rf /tmp/asus-firmware/* /usr/lib/firmware/ && \
-    rm -rf /tmp/asus-firmware \
-    ; fi
+  if [[ "${IMAGE_FLAVOR}" =~ "asus" ]]; then \
+  wget https://copr.fedorainfracloud.org/coprs/lukenukem/asus-linux/repo/fedora-$(rpm -E %fedora)/lukenukem-asus-linux-fedora-$(rpm -E %fedora).repo -O /etc/yum.repos.d/_copr_lukenukem-asus-linux.repo && \
+  rpm-ostree install \
+  asusctl \
+  asusctl-rog-gui && \
+  git clone https://gitlab.com/asus-linux/firmware.git --depth 1 /tmp/asus-firmware && \
+  cp -rf /tmp/asus-firmware/* /usr/lib/firmware/ && \
+  rm -rf /tmp/asus-firmware \
+  ; fi
 
 # Add ublue kmods, add needed negativo17 repo and then immediately disable due to incompatibility with RPMFusion
 COPY --from=bluefin-akmods /rpms /tmp/akmods-rpms
 RUN --mount=type=cache,target=/var/cache/akmods \
-    sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/_copr_ublue-os-akmods.repo && \
-    wget https://negativo17.org/repos/fedora-multimedia.repo -O /etc/yum.repos.d/negativo17-fedora-multimedia.repo && \
-    # Core KMODS
-    rpm-ostree install \
-    /tmp/akmods-rpms/kmods/*openrazer*.rpm \
-    /tmp/akmods-rpms/kmods/*ryzen-smu*.rpm \
-    /tmp/akmods-rpms/kmods/*v4l2loopback*.rpm \
-    /tmp/akmods-rpms/kmods/*xone*.rpm \
-    /tmp/akmods-rpms/kmods/*xpadneo*.rpm \
-    /tmp/akmods-rpms/kmods/*zenergy*.rpm \
-    /tmp/akmods-rpms/kmods/*wl*.rpm && \
-    # Asus KMODS
-    if grep -qv "asus" <<< "${AKMODS_FLAVOR}"; then \
-    rpm-ostree install \/tmp/akmods-rpms/kmods/*evdi*.rpm \
-    ; fi && \
-    sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/negativo17-fedora-multimedia.repo
+  sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/_copr_ublue-os-akmods.repo && \
+  wget https://negativo17.org/repos/fedora-multimedia.repo -O /etc/yum.repos.d/negativo17-fedora-multimedia.repo && \
+  # Core KMODS
+  rpm-ostree install \
+  /tmp/akmods-rpms/kmods/*openrazer*.rpm \
+  /tmp/akmods-rpms/kmods/*ryzen-smu*.rpm \
+  /tmp/akmods-rpms/kmods/*v4l2loopback*.rpm \
+  /tmp/akmods-rpms/kmods/*xone*.rpm \
+  /tmp/akmods-rpms/kmods/*xpadneo*.rpm \
+  /tmp/akmods-rpms/kmods/*zenergy*.rpm \
+  /tmp/akmods-rpms/kmods/*wl*.rpm && \
+  # Asus KMODS
+  if grep -qv "asus" <<< "${AKMODS_FLAVOR}"; then \
+  rpm-ostree install \/tmp/akmods-rpms/kmods/*evdi*.rpm \
+  ; fi && \
+  sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/negativo17-fedora-multimedia.repo
 
 # GNOME VRR & Prompt
 RUN --mount=type=cache,target=/var/cache/gnome-prompt \
