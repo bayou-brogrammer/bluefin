@@ -1,41 +1,37 @@
-# bluefin
+# Ōrora (オーロラ)
 
-**This image is considered Beta** 
+<!-- <div align="center">
 
-## [Download the test ISO](https://github.com/ublue-os/bluefin/releases/)
-## [projectbluefin.io](https://projectbluefin.io)
-## [Announcement Blog Post](https://www.ypsidanger.com/announcing-project-bluefin/)
+[![Build Ōrora](https://github.com/bayou-brogrammer/orora/actions/workflows/build.yml/badge.svg)](https://github.com/bayou-brogrammer/orora/actions/workflows/build.yml)
+[![Ōrora Iso Release](https://github.com/bayou-brogrammer/orora/actions/workflows/release-iso.yml/badge.svg?branch=live)](https://github.com/bayou-brogrammer/orora/actions/workflows/release-iso.yml)
 
-A familiar(ish) Ubuntu desktop for Fedora Silverblue. It strives to cover these three use cases:
-- For end users it provides a system as reliable as a Chromebook with near-zero maintainance, with the power of Ubuntu and Fedora fused together
-- For developers we endeavour to provide the best cloud-native developer experience by enabling easy consumption of the [industry's leading tools](https://landscape.cncf.io/card-mode?sort=stars). These are included in dedicated `bluefin-dx` and `bluefin-dx-nvidia` images
-- For gamers we strive to deliver a world-class Flathub gaming experience
+</div> -->
 
-![image](https://github.com/ublue-os/bluefin/assets/1264109/c0b3fa8a-f513-4bb1-b314-e134d1802e18)
+<div align="center" width="50%">
+  <img alt="orora" src="assets/4-design/variant5.png">
 
-> "Evolution is a process of constant branching and expansion." - Stephen Jay Gould
+  [Ōrora (オーロラ)](https://www.nihongomaster.com/japanese/dictionary/word/3106/o%E3%83%BCrora-%E3%82%AA%E3%83%BC%E3%83%AD%E3%83%A9) is an opinionated custom-built operating system developed on the solid foundation of Universal Blue (Ublue). Embark on a Cosmic Computing Odyssey with Ōrora: Your Imagination in the Universe of Operating Systems
+  
+</div>
 
-# Documentation
+## Installation
 
-1. [Bluefin](https://universal-blue.discourse.group/t/introduction-to-bluefin/41)
-2. [Discussions and Announcements](https://universal-blue.discourse.group/c/bluefin/6) - strongly recommended!
-3. [Developer Experience Edition](https://universal-blue.discourse.group/t/bluefin-dx-the-bluefin-developer-experience/39)
-4. [Administrator's Guide](https://universal-blue.discourse.group/t/bluefin-administrators-guide/40)
-5. [Framework Images](https://universal-blue.org/images/framework/)
+Images that can be rebased:
 
-## Repobeats
+- [Silverblue](https://fedoraproject.org/silverblue/)
+- [Kinoite](https://fedoraproject.org/kinoite/)
+- [Sericea](https://fedoraproject.org/sericea/)
+- [Onyx](https://fedoraproject.org/onyx/)
+- [Any UBlue OS Image](https://universal-blue.org/images/)
+- [Any rpm-ostree Based Image](https://coreos.github.io/rpm-ostree/)
 
-![Alt](https://repobeats.axiom.co/api/embed/40b85b252bf6ea25eb90539d1adcea013ccae69a.svg "Repobeats analytics image")
+---
 
-## Star History
+> [!CAUTION]
+> It is reccomended to pin your current deployment before rebasing onto another.
+> sudo ostree admin pin 0
 
-<a href="https://star-history.com/#ublue-os/bluefin&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ublue-os/bluefin&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ublue-os/bluefin&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=ublue-os/bluefin&type=Date" />
-  </picture>
-</a>
+- First rebase to the unsigned image, to get the proper signing keys and policies installed:
 
   ```sh
   rpm-ostree rebase ostree-unverified-registry:ghcr.io/n16hth4wkk/orora:latest --reboot
