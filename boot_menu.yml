@@ -1,16 +1,16 @@
 ublue_variants:
-  - label: ublue-os/bluefin
+  - label: orora-os/bluefin
     ks: /kickstart/ublue-os.ks
     flavors:
-      - label: bluefin
-        info: Bluefin
-  - label: ublue-os/bluefin-nvidia
+      - label: orora
+        info: Orora
+
+  - label: orora-os/orora-nvidia
     ks: /kickstart/ublue-os-nvidia.ks
     subvariants:
       - label: latest driver
       - label: 470xx driver
         suffix: -470
     flavors:
-      - label: bluefin-nvidia
-        info: Bluefin
-        
+      - label: orora-nvidia
+        info: Orora with Nvidia drivers
