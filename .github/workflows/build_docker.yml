@@ -1,0 +1,221 @@
+name: Build and Push Image (Using Docker buildx)
+on:
+  merge_group:
+  workflow_dispatch:
+
+  schedule:
+    - cron: '30 14 * * *'  # 14:30 UTC everyday (2:30 PM UTC everyday) (8:30 AM CST everyday)
+
+  pull_request:
+    branches:
+      - bluefin-dev
+      - testing
+    paths-ignore:
+      - '**.md'
+      
+  push:
+    branches:
+      - bluefin-dev
+      - testing
+    tags:
+      - "v*.*.*"
+    paths-ignore:
+      - '**.md'
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+
+env:
+  IMAGE_NAME:
+  AKMODS_FLAVOR:
+  DOCKER_BUILDKIT: 1
+  PROJECT_ID: 5rkt16xwr1
+  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+
+jobs:
+  push-ghcr:
+    name: Build using Docker Buildx
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        image_flavor: [asus]
+        major_version: [39]
+        base_name: [bluefin-dx]
+        include:
+          - major_version: 39
+            is_gts_version: false
+            is_latest_version: true
+            is_stable_version: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Depot CLI
+        uses: depot/setup-action@v1
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          buildkitd-flags: --debug
+      - name: Check just syntax
+        uses: ublue-os/just-action@v1
+
+      - name: Verify base image
+        uses: EyeCantCU/cosign-action/verify@v0.2.2
+        with:
+          containers: silverblue-${{ matrix.image_flavor }}:${{ matrix.major_version }}
+
+      - name: Verify Chainguard images
+        if: matrix.base_name != 'bluefin'
+        uses: EyeCantCU/cosign-action/verify@v0.2.2
+        with:
+          containers: dive, flux, helm, ko, minio, kubectl
+          cert-identity: https://github.com/chainguard-images/images/.github/workflows/release.yaml@refs/heads/main
+          oidc-issuer: https://token.actions.githubusercontent.com
+          registry: cgr.dev/chainguard
+
+      - name: Maximize build space
+        uses: ublue-os/remove-unwanted-software@v6
+
+      - name: Matrix Variables
+        run: |
+          if [[ "${{ matrix.image_flavor }}" == "main" ]]; then
+              echo "IMAGE_NAME=${{ matrix.base_name }}" >> $GITHUB_ENV
+          else
+              echo "IMAGE_NAME=${{ format('{0}-{1}', matrix.base_name, matrix.image_flavor) }}" >> $GITHUB_ENV
+          fi
+          if [[ "${{ matrix.image_flavor }}" =~ "asus" ]]; then
+              echo "AKMODS_FLAVOR=asus" >> $GITHUB_ENV
+          elif [[ "${{ matrix.image_flavor }}" =~ "surface" ]]; then
+              echo "AKMODS_FLAVOR=surface" >> $GITHUB_ENV
+          else
+              echo "AKMODS_FLAVOR=main" >> $GITHUB_ENV
+          fi
+
+      - name: Get Current Fedora Version
+        id: labels
+        shell: bash
+        run: |
+          set -eo pipefail
+          ver=$(skopeo inspect docker://ghcr.io/ublue-os/silverblue-${{ matrix.image_flavor }}:${{ matrix.major_version }} | jq -r '.Labels["org.opencontainers.image.version"]')
+          if [ -z "$ver" ] || [ "null" = "$ver" ]; then
+            echo "inspected image version must not be empty or null"
+            exit 1
+          fi
+          echo "VERSION=$ver" >> $GITHUB_OUTPUT
+
+      # Workaround bug where capital letters in your GitHub username make it impossible to push to GHCR.
+      # https://github.com/macbre/push-to-ghcr/issues/12
+      - name: Lowercase Registry
+        id: registry_case
+        uses: ASzc/change-string-case-action@v6
+        with:
+          string: ${{ env.IMAGE_REGISTRY }}
+
+      - name: Image Metadata
+        uses: docker/metadata-action@v5
+        id: meta
+        with:
+          flavor: |
+            latest=true
+          images: |
+            ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }}
+          labels: |
+            org.opencontainers.image.title=${{ env.IMAGE_NAME }}
+            org.opencontainers.image.version=${{ steps.labels.outputs.VERSION }}
+            io.artifacthub.package.logo-url=https://avatars.githubusercontent.com/u/120078124?s=200&v=4
+            org.opencontainers.image.description=An interpretation of the Ubuntu spirit built on Fedora technology
+            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/ublue-os/bluefin/bluefin/README.md
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=sha
+            type=ref,event=branch
+            type=schedule,pattern=nightly
+            type=semver,pattern={{version}}
+
+      - name: Login to GitHub Container Registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        id: build_push
+        uses: depot/build-push-action@v1
+        with:
+          push: true
+          buildx-fallback: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          project: ${{ env.PROJECT_ID }}
+          target: ${{ matrix.base_name }}
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          token: ${{ secrets.DEPOT_PROJECT_TOKEN }}
+          build-args: |
+            IMAGE_NAME=${{ env.IMAGE_NAME }}
+            AKMODS_FLAVOR=${{ env.AKMODS_FLAVOR }}
+            IMAGE_FLAVOR=${{ matrix.image_flavor }}
+            IMAGE_VENDOR=${{ github.repository_owner }}
+            FEDORA_MAJOR_VERSION=${{ matrix.major_version }}
+
+      # - name: Build and push
+      #   id: build_push
+      #   uses: docker/build-push-action@v5
+      #   with:
+      #     context: .
+      #     push: true
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
+      #     target: ${{ matrix.base_name }}
+      #     tags: ${{ steps.meta.outputs.tags }}
+      #     labels: ${{ steps.meta.outputs.labels }}
+      #     build-args: |
+      #       IMAGE_NAME=${{ env.IMAGE_NAME }}
+      #       AKMODS_FLAVOR=${{ env.AKMODS_FLAVOR }}
+      #       IMAGE_FLAVOR=${{ matrix.image_flavor }}
+      #       IMAGE_VENDOR=${{ github.repository_owner }}
+      #       FEDORA_MAJOR_VERSION=${{ matrix.major_version }}
+
+      - uses: sigstore/cosign-installer@v3.4.0
+        if: github.event_name != 'pull_request'
+
+      - name: Sign container image
+        if: github.event_name != 'pull_request'
+        run: |
+          cosign sign -y --key env://COSIGN_PRIVATE_KEY ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }}@${TAGS}
+        env:
+          COSIGN_EXPERIMENTAL: false
+          TAGS: ${{ steps.build_push.outputs.digest }}
+          COSIGN_PRIVATE_KEY: ${{ secrets.SIGNING_SECRET }}
+
+      - name: Echo outputs
+        if: github.event_name != 'pull_request'
+        # echo "${{ toJSON(steps.build_push.outputs) }}"
+        run: |
+          echo "${{ steps.build_push.outputs }}"
+
+  check:
+    name: Check all builds successful
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    needs: [push-ghcr]
+    steps:
+      - name: Exit on failure
+        if: ${{ needs.push-ghcr.result == 'failure' }}
+        shell: bash
+        run: exit 1
+      - name: Exit
+        shell: bash
+        run: exit 0
