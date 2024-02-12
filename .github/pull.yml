@@ -1,6 +1,14 @@
 version: "1"
 rules:
-  - base: main
+  - base: bluefin-dev
     upstream: ublue-os:main
+    mergeMethod: hardreset
+    mergeUnstable: false
+
+  - base: main
+    upstream: bluefin-dev
     mergeMethod: merge
     mergeUnstable: false
+
+label: "chore(merge): :arrow_heading_down: pull"
+conflictLabel: "merge-conflict"
