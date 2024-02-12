@@ -1,0 +1,13 @@
+# shellcheck shell=bash
+declare -Ar known_container=(
+    ["orora-cli"]="a21a910811504857bea4c96b3d937b93"
+    ["fedora-toolbox"]="d6fe45489ed74fada5d95d715449ce7e"
+    ["wolfi-dx-toolbox"]="03d42eab38f740089cbe2fa5e2d6a374"
+    ["Host"]="2871e8027773ae74d6c87a5f659bbc74"
+)
+declare -Ar known_guid=(
+    ["a21a910811504857bea4c96b3d937b93"]="orora-cli"
+    ["d6fe45489ed74fada5d95d715449ce7e"]="fedora-toolbox"
+    ["03d42eab38f740089cbe2fa5e2d6a374"]="wolfi-dx-toolbox"
+    ["2871e8027773ae74d6c87a5f659bbc74"]="Host"
+)
