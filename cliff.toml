@@ -16,8 +16,14 @@ body = """
 {% endif %}\
 
 {% macro commit(commit) -%}
+    {% if commit.author.email == "lecoqjacob@gmail.com" or commit.message is containing("orora") %} \
+        {% set_global LINK = "<REPO>" %} \
+    {% else %} \
+        {% set_global LINK = "<UPSTREAM>" %} \
+    {% endif %} \
+
     - {% if commit.scope %}*({{ commit.scope }})* {% endif %}{% if commit.breaking %}[**breaking**] {% endif %}\
-        {{ commit.message | upper_first }} - ([{{ commit.id | truncate(length=7, end="") }}]({% if commit.author.name == "hikaru" %}<REPO>{% else %}<UPSTREAM>{% endif %}/commit/{{ commit.id }}))\
+        {{ commit.message | upper_first }} - ([{{ commit.id | truncate(length=7, end="") }}]({{ LINK }}/commit/{{ commit.id }}))\
 {% endmacro -%}
 
 {% for group, commits in commits | group_by(attribute="group") %}
