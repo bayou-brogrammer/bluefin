@@ -28,7 +28,7 @@ body:
     attributes:
       label: Output of `rpm-ostree status`
       description: Please run `rpm-ostree status` and paste the output here.
-      render: shell
+      render: Shell
   - type: textarea
     id: extra-context
     attributes:
