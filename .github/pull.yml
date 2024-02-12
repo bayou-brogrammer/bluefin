@@ -1,7 +1,7 @@
 version: "1"
 rules:
   - base: bluefin-dev
-    upstream: ublue-os:main
+    upstream: bluefin:main
     mergeMethod: hardreset
     mergeUnstable: false
 
