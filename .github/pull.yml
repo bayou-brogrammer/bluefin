@@ -1,7 +1,7 @@
 version: "1"
 rules:
   - base: bluefin-dev
-    upstream: bluefin:main
+    upstream: ublue-os:main
     mergeMethod: rebase
     mergeUnstable: false
 
@@ -10,5 +10,5 @@ rules:
     mergeMethod: merge
     mergeUnstable: false
 
-label: "chore(merge): :arrow_heading_down: pull"
+label: ":arrow_heading_down: pull"
 conflictLabel: "merge-conflict"

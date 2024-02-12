@@ -5,9 +5,9 @@ benchmark:
     echo 'Running a 1 minute benchmark ...'
     stress-ng --matrix 0 -t 1m --times
 
-# Configure Bluefin-CLI Terminal Experience
-bluefin-cli:
-    @/usr/libexec/enable-bluefin-cli.sh
+# Configure Orora-CLI Terminal Experience
+orora-cli:
+    @/usr/libexec/enable-orora-cli.sh
 
 # Configure Terminal Experience
 [private]
