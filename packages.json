@@ -1,7 +1,7 @@
 {
 	"all": {
 		"include": {
-			"bluefin": [
+			"orora": [
 				"bash-color-prompt",
 				"cockpit-bridge",
 				"evtest",
@@ -42,10 +42,12 @@
 				"wireguard-tools",
 				"xprop",
 				"yaru-theme",
-				"wl-clipboard", 
+				"wl-clipboard",
 				"zsh"
 			],
-			"bluefin-dx": [
+			"orora-dx": [
+				"/tmp/rustdesk.rpm",
+				"/tmp/appimagelauncher.rpm",
 				"adobe-source-code-pro-fonts",
 				"cascadia-code-fonts",
 				"cockpit-machines",
@@ -59,7 +61,7 @@
 				"code",
 				"containerd.io",
 				"dbus-x11",
-                "devpod",
+				"devpod",
 				"distrobuilder",
 				"docker-ce",
 				"docker-ce-cli",
@@ -97,13 +99,14 @@
 				"qemu-user-binfmt",
 				"qemu-user-static",
 				"qemu",
+				"thunar",
 				"ubuntu-family-fonts",
 				"virt-manager",
 				"virt-viewer"
 			]
 		},
 		"exclude": {
-			"bluefin": [
+			"orora": [
 				"firefox-langpacks",
 				"firefox",
 				"gnome-extensions-app",
@@ -111,27 +114,12 @@
 				"gnome-tour",
 				"ublue-os-update-services"
 			],
-			"bluefin-dx": []
-		}
-	},
-	"38": {
-		"include": {
-			"bluefin": [
-				"gnome-shell-extension-tailscale-status"
-			],
-			"bluefin-dx": [],
-			"bluefin-framework": []
-		},
-		"exclude": {
-			"bluefin": [
-				"podman-docker"
-			],
-			"bluefin-dx": []
+			"orora-dx": []
 		}
 	},
 	"39": {
 		"include": {
-			"bluefin": [
+			"orora": [
 				"gnome-shell-extension-tailscale-gnome-qs",
 				"input-leap",
 				"nautilus-open-any-terminal",
@@ -141,16 +129,16 @@
 				"tuned-utils-systemtap",
 				"tuned-profiles-atomic"
 			],
-			"bluefin-dx": [],
-			"bluefin-framework": []
+			"orora-dx": [],
+			"orora-framework": []
 		},
 		"exclude": {
-			"bluefin": [
+			"orora": [
 				"podman-docker",
 				"gnome-terminal-nautilus"
 			],
-			"bluefin-dx": [],
-			"bluefin-framework": []
+			"orora-dx": [],
+			"orora-framework": []
 		}
 	}
 }

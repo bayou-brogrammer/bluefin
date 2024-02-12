@@ -1,0 +1,5 @@
+{
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-issue-config.json": "file://~/dev/ublue__/personal__/orora/.github/ISSUE_TEMPLATE/config.yml"
+  }
+}
