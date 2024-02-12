@@ -8,14 +8,14 @@ on:
 
   pull_request:
     branches:
-      - bluefin-dev
+      - main
       - testing
     paths-ignore:
       - '**.md'
       
   push:
     branches:
-      - bluefin-dev
+      - main
       - testing
     tags:
       - "v*.*.*"
