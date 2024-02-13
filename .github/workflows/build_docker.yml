@@ -1,6 +1,6 @@
 name: Build and Push Image (Using Docker buildx)
 on:
-  merge_group:
+  # merge_group:
   workflow_dispatch:
 
   schedule:
@@ -33,12 +33,11 @@ env:
   IMAGE_NAME: orora-asus
   IMAGE_BASE_NAME: orora
   PROJECT_ID: 5rkt16xwr1
-
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
 
 jobs:
   push-ghcr:
-    name: Build using Docker Buildx
+    name: Build and Push using Docker Buildx
     runs-on: ubuntu-latest
 
     permissions:
@@ -52,7 +51,7 @@ jobs:
         base_name: [orora]
         major_version: [39]
     steps:
-      - name: Checkout
+      - name: Git Checkout
         uses: actions/checkout@v4
       - name: Set up Depot CLI
         uses: depot/setup-action@v1
@@ -65,12 +64,12 @@ jobs:
           buildkitd-flags: --debug
       - name: Check just syntax
         uses: ublue-os/just-action@v1
-
+      
+      # Image verification
       - name: Verify base image
         uses: EyeCantCU/cosign-action/verify@v0.2.2
         with:
           containers: silverblue-${{ env.IMAGE_FLAVOR }}:${{ matrix.major_version }}
-
       - name: Verify Chainguard images
         uses: EyeCantCU/cosign-action/verify@v0.2.2
         with:

@@ -165,6 +165,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
+   - *(orora-bluefin)* CHANGELOG.md - ([20c3da9](https://github.com/bayou-brogrammer/bluefin/commit/20c3da9b77f1ff0ac6c54065f8f401ddd0a2e8e7))
    - Add repobeats and star history (#816) - ([3b069e1](https://github.com/ublue-os/bluefin/commit/3b069e1a928bf3c6595a3c912f65032894a90d3d))
    - Add links to website and blog announcement (#629) - ([fa1fd90](https://github.com/ublue-os/bluefin/commit/fa1fd90ecb8a00159e88020dd614ed59f6523ca5))
    - Update screenshot (#621) - ([779b1f6](https://github.com/ublue-os/bluefin/commit/779b1f6a11e6af2b9bd60005967c0e6da2eda8af))
@@ -172,6 +173,7 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
    - *(bluefin-cli)* Fix typo (#704) - ([a4584f3](https://github.com/ublue-os/bluefin/commit/a4584f39e956fcab4b5744c375f284014fe54325))
+   - *(ci)* Main from bluefin-dev (#12) - ([59ca0d2](https://github.com/ublue-os/bluefin/commit/59ca0d27d37fce3122c995d96231ccfbaf1fc909))
    - *(ci)* Fix possible empty version meta on image (#878) - ([e801dfb](https://github.com/ublue-os/bluefin/commit/e801dfb7e3682bf8a1e2b1455206696e33d4ca7c))
    - *(ci)* Extract contributors readme action to separate workflow (#806) - ([a4ac751](https://github.com/ublue-os/bluefin/commit/a4ac751efe5b713be2d5b26554c9bccd3456aa52))
    - *(ci)* Fix syntax error (#803) - ([9f94c3e](https://github.com/ublue-os/bluefin/commit/9f94c3e9724fea7d05307d50e7fbd630ee2e9538))
@@ -184,6 +186,7 @@ All notable changes to this project will be documented in this file.
    - *(just)* Brew moved to config repo (#679) - ([8c8799c](https://github.com/ublue-os/bluefin/commit/8c8799c40b539201f08ad4381c2b76216a9d42d1))
    - *(just)* Fix indentation for format checker (#672) - ([60425a4](https://github.com/ublue-os/bluefin/commit/60425a4a05986f96e11e668aa9a7fc73c2c04576))
    - *(just)* Add docker description (#638) - ([9e9c10c](https://github.com/ublue-os/bluefin/commit/9e9c10cd67b17e2ea752a7b50a987c2f404eeb47))
+   - *(orora)* Cleanup Dockerfile - ([631b042](https://github.com/bayou-brogrammer/bluefin/commit/631b0425ac08e3f95e912b47e1ec94733fbf417a))
    - *(orora)* Orora additions (#11) - ([919bc0e](https://github.com/bayou-brogrammer/bluefin/commit/919bc0eef8c24d88653543c0d09564352f16d131))
    - *(orora)* Orora additions (#10) - ([ca38905](https://github.com/bayou-brogrammer/bluefin/commit/ca3890501834ce8979f4301c1c5a94c8a541725d))
    - *(orora)* Update pull.yml - ([f931c81](https://github.com/bayou-brogrammer/bluefin/commit/f931c81d0105a0996fcb2a14a29ef2afc21841c3))

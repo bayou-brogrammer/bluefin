@@ -1,12 +1,12 @@
 version: "1"
 rules:
-  - base: bluefin-dev
+  - base: bluefin-main
     upstream: ublue-os:main
     mergeMethod: rebase
     mergeUnstable: false
 
   - base: main
-    upstream: bluefin-dev
+    upstream: bluefin-main
     mergeMethod: merge
     mergeUnstable: false
 
