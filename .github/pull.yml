@@ -2,12 +2,12 @@ version: "1"
 rules:
   - base: bluefin-main
     upstream: ublue-os:main
-    mergeMethod: rebase
+    mergeMethod: merge
     mergeUnstable: false
 
   - base: main
     upstream: bluefin-main
-    mergeMethod: merge
+    mergeMethod: rebase
     mergeUnstable: false
 
 label: ":arrow_heading_down: pull"
