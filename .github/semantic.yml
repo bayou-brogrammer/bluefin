@@ -1,2 +1,5 @@
 enabled: true
 titleOnly: true
+scopes:
+  - pull
+  - merge
