@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: '40 14 * * *'  # 14:30 UTC everyday (2:30 PM UTC everyday) (8:30 AM CST everyday)
+    - cron: "0 6 * * *" # at 06:00 UTC (midnight CST)
 
   pull_request:
     branches:
       - main
       - testing
     paths-ignore:
-      - '**.md'
+      - "**.md"
 
   push:
     branches:
@@ -20,7 +20,7 @@ on:
     tags:
       - "v*.*.*"
     paths-ignore:
-      - '**.md'
+      - "**.md"
 
 concurrency:
   cancel-in-progress: true
@@ -64,7 +64,7 @@ jobs:
           buildkitd-flags: --debug
       - name: Check just syntax
         uses: ublue-os/just-action@v1
-      
+
       # Image verification
       - name: Verify base image
         uses: EyeCantCU/cosign-action/verify@v0.2.2
