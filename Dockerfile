@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1.3-labs
 
 ARG BASE_HUB="ghcr.io/ublue-os"
-ARG IMAGE_FLAVOR="${IMAGE_FLAVOR:-main}"
-ARG AKMODS_FLAVOR="${AKMODS_FLAVOR:-main}"
+ARG IMAGE_FLAVOR="${IMAGE_FLAVOR:-asus}"
+ARG AKMODS_FLAVOR="${AKMODS_FLAVOR:-asus}"
 ARG BASE_IMAGE_NAME="${BASE_IMAGE_NAME:-silverblue}"
 ARG FEDORA_MAJOR_VERSION="${FEDORA_MAJOR_VERSION:-39}"
 ARG SOURCE_IMAGE="${SOURCE_IMAGE:-$BASE_IMAGE_NAME-$IMAGE_FLAVOR}"
@@ -10,21 +10,19 @@ ARG BASE_IMAGE="${BASE_HUB}/${SOURCE_IMAGE}"
 
 # Docker cannot sub variables in COPY commands, so we need to define the image name here.
 FROM ${BASE_HUB}/akmods:${AKMODS_FLAVOR}-${FEDORA_MAJOR_VERSION} AS orora-akmods
-FROM ${BASE_IMAGE}:${FEDORA_MAJOR_VERSION} AS orora-builder
+FROM ${BASE_IMAGE}:${FEDORA_MAJOR_VERSION} as orora
 
 # ==================================================================================================================================================== #
 #                                                                 orora image section
 # ==================================================================================================================================================== #
 
-FROM orora-builder AS base
-
 ARG IMAGE_FLAVOR
 ARG AKMODS_FLAVOR
 ARG BASE_IMAGE_NAME
 ARG FEDORA_MAJOR_VERSION
+ARG PACKAGE_LIST="orora"
 ARG IMAGE_NAME="${IMAGE_NAME}"
 ARG IMAGE_VENDOR="${IMAGE_VENDOR}"
-ARG PACKAGE_LIST="orora"
 
 COPY usr /usr
 COPY etc /etc
@@ -83,8 +81,7 @@ RUN --mount=type=cache,target=/var/cache/akmods \
   sed -i 's@enabled=1@enabled=0@g' /etc/yum.repos.d/negativo17-fedora-multimedia.repo
 
 # GNOME VRR & Prompt
-RUN --mount=type=cache,target=/var/cache/gnome-prompt \
-  rpm-ostree override replace \
+RUN rpm-ostree override replace \
   --experimental \
   --from repo=copr:copr.fedorainfracloud.org:kylegospo:gnome-vrr \
   mutter \
@@ -106,7 +103,7 @@ RUN --mount=type=cache,target=/var/cache/gnome-prompt \
 COPY --from=ghcr.io/ublue-os/bluefin-cli /usr/bin/atuin /usr/bin/atuin
 COPY --from=ghcr.io/ublue-os/bluefin-cli /usr/share/bash-prexec /usr/share/bash-prexec
 
-RUN --mount=type=cache,target=/var/cache/orora <<EOF
+RUN <<EOF
 /tmp/scripts/starship.sh && \
   /tmp/scripts/build.sh && \
   /tmp/scripts/image-info.sh && \
@@ -158,14 +155,6 @@ RUN rm -f /etc/yum.repos.d/charm.repo \
 # ==================================================================================================================================================== #
 #                                                         orora-dx developer edition image section
 # ==================================================================================================================================================== #
-
-FROM orora-builder AS base-dx
-
-ARG IMAGE_FLAVOR
-ARG BASE_IMAGE_NAME
-ARG FEDORA_MAJOR_VERSION
-ARG IMAGE_NAME="${IMAGE_NAME}"
-ARG IMAGE_VENDOR="${IMAGE_VENDOR}"
 ARG PACKAGE_LIST="orora-dx"
 
 # dx specific files come from the dx directory in this repo
@@ -192,7 +181,7 @@ RUN wget https://github.com/docker/compose/releases/latest/download/docker-compo
   wget https://copr.fedorainfracloud.org/coprs/ublue-os/staging/repo/fedora-"${FEDORA_MAJOR_VERSION}"/ublue-os-staging-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/ublue-os-staging-fedora-"${FEDORA_MAJOR_VERSION}".repo && \
   wget https://copr.fedorainfracloud.org/coprs/atim/ubuntu-fonts/repo/fedora-"${FEDORA_MAJOR_VERSION}"/atim-ubuntu-fonts-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/atim-ubuntu-fonts-fedora-"${FEDORA_MAJOR_VERSION}".repo
 
-RUN --mount=type=cache,target=/var/cache/orora-dx <<EOF
+RUN <<EOF
 /tmp/scripts/build.sh
 /tmp/scripts/image-info.sh
 
@@ -214,15 +203,6 @@ systemctl enable docker.socket && \
   systemctl disable pmie.service && \
   systemctl disable pmlogger.service
 EOF
-
-FROM orora-builder AS orora
-
-COPY scripts /tmp/scripts
-
-COPY --from=base usr /usr
-COPY --from=base etc /etc
-COPY --from=base-dx usr /usr
-COPY --from=base-dx etc /etc
 
 RUN /tmp/scripts/workarounds.sh
 
