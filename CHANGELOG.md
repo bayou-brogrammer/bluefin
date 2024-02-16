@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
    - *(ci)* Introduce a testing tag (#838) - ([d52702b](https://github.com/ublue-os/bluefin/commit/d52702b243353bb0a4b7c6cd88cb4a755249e360))
    - *(ci)* Verify remaining toolboxes (#779) - ([bf5868a](https://github.com/ublue-os/bluefin/commit/bf5868af642c8184c042f826690974718fd480d7))
    - *(ci)* Verify base/Chainguard image(s) with cosign before building (#754) - ([b0703f9](https://github.com/ublue-os/bluefin/commit/b0703f95cb52c825aa0504b9bf497a57010ced62))
+   - *(cosign)* Go keyless for cosign - ([63ebf91](https://github.com/bayou-brogrammer/bluefin/commit/63ebf913b7f981b1bef27ce97ddf3dcb88370738))
    - *(dx)* Add remote-containers extension to vscode (#888) - ([c3251a9](https://github.com/ublue-os/bluefin/commit/c3251a9e6e23b22a2c82b761b509796a614eadd6))
    - *(dx)* Add wheel users to docker,incus-admin,lxd,libvirt groups (#775) - ([3dd7809](https://github.com/ublue-os/bluefin/commit/3dd78096f6091ad4a9b87e518203bef15b9b0f6a))
    - *(dx)* Add command-not-found (#765) - ([f5409ca](https://github.com/ublue-os/bluefin/commit/f5409ca14c4607c12159eb9e0587b420dc172145))
@@ -28,6 +29,7 @@ All notable changes to this project will be documented in this file.
    - *(toolbox)* Verify wolfi-base before building (#774) - ([e4ab9d3](https://github.com/ublue-os/bluefin/commit/e4ab9d3863661f38a2cbf77a6c2b02f5f95f4608))
    - *(wolfi)* Add packages needed (#707) - ([1c81d12](https://github.com/ublue-os/bluefin/commit/1c81d121b50541082c81eae2071d190cd8f1a98b))
    - *(yafti)* Add podman desktop (#636) - ([827a2a0](https://github.com/ublue-os/bluefin/commit/827a2a05546dd548545bf319bcf98b49db053b2e))
+   - Set terminal quick launch shortcuts (#903) - ([a7d993d](https://github.com/ublue-os/bluefin/commit/a7d993de8e61c4856ae90b94481145761e35e01b))
    - Get Atuin from bluefin-cli (#895) - ([95ca17f](https://github.com/ublue-os/bluefin/commit/95ca17f462604e9f40b77367c359ccea0e893966))
    - Improve prompt integration with quadlets (#889) - ([267e5be](https://github.com/ublue-os/bluefin/commit/267e5be35d824a5c921f18bce9fc151ed6762947))
    - Add ability to set Prompt terminal transparency with ujust (#886) - ([98873c5](https://github.com/ublue-os/bluefin/commit/98873c5f151ce88368a178894b4b13d9d132b259))
@@ -101,8 +103,10 @@ All notable changes to this project will be documented in this file.
    - *(wolfi)* Move bluefin-cli to wolfi (#717) - ([89be8ef](https://github.com/ublue-os/bluefin/commit/89be8ef5727414453bbd8a9c76f5f4541c1b3564))
    - *(wolfi)* Remove distrobox packages (#710) - ([3d1663a](https://github.com/ublue-os/bluefin/commit/3d1663afd6076952d1af44217674380f8486e6b9))
    - *(wolfi)* Add packages for distrobox (#709) - ([54d5e95](https://github.com/ublue-os/bluefin/commit/54d5e95351b55525b32d7187ba1e72f887854d94))
+   - Remove fedora shortcut from -dx (#905) - ([232a053](https://github.com/ublue-os/bluefin/commit/232a0532227b0790e28e0c53c3cd2dd2edb8a462))
+   - Shortcut should be Return not Enter (#904) - ([3e04e66](https://github.com/ublue-os/bluefin/commit/3e04e66263a17980adb9845e08bd658559770620))
+   - Update libadwaita package for Prompt (#901) - ([45fddbd](https://github.com/ublue-os/bluefin/commit/45fddbd2753bae34794a37e356d53a4adad77e53))
    - Enable MOTD for fish (#897) - ([954d4e0](https://github.com/ublue-os/bluefin/commit/954d4e05437c3f15d3d31bebfd845a49edb32f40))
-   - Enable MOTD for fish (#897) (#9) - ([589a679](https://github.com/ublue-os/bluefin/commit/589a67986535141502a0e13306583435d6ae0c09))
    - Correct name in enable-bluefin-cli.sh (#894) - ([36adbfd](https://github.com/ublue-os/bluefin/commit/36adbfdb37e66b6a66320255da068348b234aee7))
    - Chmod (#887) - ([922550e](https://github.com/ublue-os/bluefin/commit/922550ec9db6b45fca9bd311e63e42852a33ad38))
    - Correct default font applied to VSCode (#879) - ([3e0e074](https://github.com/ublue-os/bluefin/commit/3e0e07405df19774a934f8c399cea5226a6315c9))
@@ -165,7 +169,7 @@ All notable changes to this project will be documented in this file.
 
 ### 📚 Documentation
 
-   - *(orora-bluefin)* CHANGELOG.md - ([20c3da9](https://github.com/bayou-brogrammer/bluefin/commit/20c3da9b77f1ff0ac6c54065f8f401ddd0a2e8e7))
+   - *(orora-bluefin)* CHANGELOG.md - ([78cdfe2](https://github.com/bayou-brogrammer/bluefin/commit/78cdfe2d987ae71ccb6a7b51a7175912fde3fd26))
    - Add repobeats and star history (#816) - ([3b069e1](https://github.com/ublue-os/bluefin/commit/3b069e1a928bf3c6595a3c912f65032894a90d3d))
    - Add links to website and blog announcement (#629) - ([fa1fd90](https://github.com/ublue-os/bluefin/commit/fa1fd90ecb8a00159e88020dd614ed59f6523ca5))
    - Update screenshot (#621) - ([779b1f6](https://github.com/ublue-os/bluefin/commit/779b1f6a11e6af2b9bd60005967c0e6da2eda8af))
@@ -173,7 +177,7 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
    - *(bluefin-cli)* Fix typo (#704) - ([a4584f3](https://github.com/ublue-os/bluefin/commit/a4584f39e956fcab4b5744c375f284014fe54325))
-   - *(ci)* Main from bluefin-dev (#12) - ([59ca0d2](https://github.com/ublue-os/bluefin/commit/59ca0d27d37fce3122c995d96231ccfbaf1fc909))
+   - *(ci)* [skip ci] move to midnight CTS schedule - ([d34d014](https://github.com/bayou-brogrammer/bluefin/commit/d34d0142b885f05636de380bee3bddf6b74a4b0d))
    - *(ci)* Fix possible empty version meta on image (#878) - ([e801dfb](https://github.com/ublue-os/bluefin/commit/e801dfb7e3682bf8a1e2b1455206696e33d4ca7c))
    - *(ci)* Extract contributors readme action to separate workflow (#806) - ([a4ac751](https://github.com/ublue-os/bluefin/commit/a4ac751efe5b713be2d5b26554c9bccd3456aa52))
    - *(ci)* Fix syntax error (#803) - ([9f94c3e](https://github.com/ublue-os/bluefin/commit/9f94c3e9724fea7d05307d50e7fbd630ee2e9538))
@@ -186,15 +190,17 @@ All notable changes to this project will be documented in this file.
    - *(just)* Brew moved to config repo (#679) - ([8c8799c](https://github.com/ublue-os/bluefin/commit/8c8799c40b539201f08ad4381c2b76216a9d42d1))
    - *(just)* Fix indentation for format checker (#672) - ([60425a4](https://github.com/ublue-os/bluefin/commit/60425a4a05986f96e11e668aa9a7fc73c2c04576))
    - *(just)* Add docker description (#638) - ([9e9c10c](https://github.com/ublue-os/bluefin/commit/9e9c10cd67b17e2ea752a7b50a987c2f404eeb47))
-   - *(orora)* Cleanup Dockerfile - ([631b042](https://github.com/bayou-brogrammer/bluefin/commit/631b0425ac08e3f95e912b47e1ec94733fbf417a))
-   - *(orora)* Orora additions (#11) - ([919bc0e](https://github.com/bayou-brogrammer/bluefin/commit/919bc0eef8c24d88653543c0d09564352f16d131))
-   - *(orora)* Orora additions (#10) - ([ca38905](https://github.com/bayou-brogrammer/bluefin/commit/ca3890501834ce8979f4301c1c5a94c8a541725d))
-   - *(orora)* Update pull.yml - ([f931c81](https://github.com/bayou-brogrammer/bluefin/commit/f931c81d0105a0996fcb2a14a29ef2afc21841c3))
+   - *(orora)* Updates across the board - ([612ade2](https://github.com/bayou-brogrammer/bluefin/commit/612ade20fe3b54b41350926497444ed6ea3ed7c4))
+   - *(orora)* Cleanup Dockerfile - ([e9f140a](https://github.com/bayou-brogrammer/bluefin/commit/e9f140a27f89378c3bcbbe5fd8a46df7136a2608))
+   - *(orora)* Orora additions (#11) - ([918d636](https://github.com/bayou-brogrammer/bluefin/commit/918d636c85b9a0b550149abec2c2b7681d850254))
+   - *(orora)* Orora additions (#10) - ([859ede5](https://github.com/bayou-brogrammer/bluefin/commit/859ede593359be63df04159102b1d325bf346bde))
+   - *(orora)* Update pull.yml - ([42a6e13](https://github.com/bayou-brogrammer/bluefin/commit/42a6e13454369e1a48c649eb47333e9000e27eec))
    - *(readme)* Use dark theme supported markup for star history - ([fd4da30](https://github.com/ublue-os/bluefin/commit/fd4da30c8ec87410404947cad441a7af74421d9f))
    - *(readme)* Update links (#684) - ([282c3cf](https://github.com/ublue-os/bluefin/commit/282c3cf68e71545da71f2cc5fd85c848b0d150b7))
    - *(yafti)* Update docs links (#683) - ([9b1e0cd](https://github.com/ublue-os/bluefin/commit/9b1e0cd79b5dc73f046d2062ef1fcae177c15696))
    - *(yafti)* Update forum link (#682) - ([ca19cef](https://github.com/ublue-os/bluefin/commit/ca19cef6a72681a256776a9bcbb573b0e9707d5a))
-   - Switch build to main branch - ([baeed27](https://github.com/bayou-brogrammer/bluefin/commit/baeed27528404dc42d062d3bd613b9a26db68dbc))
+   - Switch build to main branch - ([8d16e17](https://github.com/bayou-brogrammer/bluefin/commit/8d16e17968344b23557d96ce1914315658e4da5f))
+   - Add a safety check for atuin in justfile (#899) - ([32067d1](https://github.com/ublue-os/bluefin/commit/32067d1814756d0a7727084a1d19118cab7cc35e))
    - Support new line in MOTD (#872) - ([45d93e6](https://github.com/ublue-os/bluefin/commit/45d93e6524f76355cfba80d75b12882d55ccee52))
    - Match bazzites topgrade.toml (#870) - ([cce1728](https://github.com/ublue-os/bluefin/commit/cce17283f5f3c62142b8b663537055d67eefe400))
    - Remove -dx container options (#866) - ([d75cda9](https://github.com/ublue-os/bluefin/commit/d75cda95903d28a305fa4406826cb04f484e5a22))
@@ -217,6 +223,10 @@ All notable changes to this project will be documented in this file.
 ### ◀️ Revert
 
    - Capslock changes - ([07a9798](https://github.com/ublue-os/bluefin/commit/07a97987a2d601e3a2500605b4b5693cadfbbee2))
+
+### Breaking
+
+   - *(orora)* Switch to podman - ([17cb37e](https://github.com/bayou-brogrammer/bluefin/commit/17cb37e43b97210424772de5fb38099a1cbd59a1))
 
 ## [1.3.0](https://github.com/bayou-brogrammer/bluefin/compare/v1.2.0..v1.3.0) - 2023-10-27
 
@@ -324,8 +334,8 @@ All notable changes to this project will be documented in this file.
    - Add pinapp menu editor (#465) - ([a4b74b6](https://github.com/ublue-os/bluefin/commit/a4b74b6fc85e16dee210ba2dea36457ed5b9b423))
    - Add bash-color-prompt (#459) - ([a974575](https://github.com/ublue-os/bluefin/commit/a974575ed0589e0ad42dea047de6ff7d12c3c839))
    - Add solaar (#456) - ([1f85c5f](https://github.com/ublue-os/bluefin/commit/1f85c5f9fa5af6cbf44352ad509ccaa2687e3fcf))
-   - Remove gnome-vrr - ([7b8c6be](https://github.com/ublue-os/bluefin/commit/7b8c6be4dc25840f58536efbc9dce9096e680165))
    - Add bootc COPR (#452) - ([2bedf4e](https://github.com/ublue-os/bluefin/commit/2bedf4e683a1ffe320a24ca07ad142a49c075b4c))
+   - Remove gnome-vrr - ([7b8c6be](https://github.com/ublue-os/bluefin/commit/7b8c6be4dc25840f58536efbc9dce9096e680165))
    - Add fedora image (#436) - ([52751af](https://github.com/ublue-os/bluefin/commit/52751afd642aabf68e8ed2c6f8533840a4a4dab1))
    - Initial pass at supporting podmansh (#412) - ([751a5f8](https://github.com/ublue-os/bluefin/commit/751a5f88e521d0741b49533a4acfca80d5180cea))
    - Add descriptions to just commands (#404) - ([2163902](https://github.com/ublue-os/bluefin/commit/216390219a8bea8a7965e453e160b0ed715050e0))
@@ -446,12 +456,12 @@ All notable changes to this project will be documented in this file.
    - Add user to docker group (#495) - ([e29cd48](https://github.com/ublue-os/bluefin/commit/e29cd48bb198dd2bce01d4b28f024fbe42379915))
    - Add gnome-vrr (#481) - ([9f3eeae](https://github.com/ublue-os/bluefin/commit/9f3eeae455f5cb5189e057410dd4a6b05ac12117))
    - Add bootc copr (#480) - ([e58d963](https://github.com/ublue-os/bluefin/commit/e58d9634e61ef59969d316ba1850895d0a2e9798))
-   - Turn off VRR - ([47e0be1](https://github.com/ublue-os/bluefin/commit/47e0be1c6d418f1f050ed1cc7b3d9e171b7ab138))
    - Add proper cjk fonts (#475) - ([63d52fb](https://github.com/ublue-os/bluefin/commit/63d52fbef123cbc84ec5bf223a96d8a71691f5fa))
    - Switch to copr for nerd-fonts (#476) - ([52c6582](https://github.com/ublue-os/bluefin/commit/52c65824e9cfeb819225e2c1040c2fc4e16f5b55))
    - Remove bootc repo (#460) - ([af09837](https://github.com/ublue-os/bluefin/commit/af09837479a65c0128affd67712e414ccf293453))
    - Remove not consumed build arg (#458) - ([5afbb31](https://github.com/ublue-os/bluefin/commit/5afbb31f45ffd32467bfd632a7e3f21deb8507cb))
    - Make use of packages.json for all images (#457) - ([65f9a6f](https://github.com/ublue-os/bluefin/commit/65f9a6f9dfc6af21077addc3f44b653bb2aee0da))
+   - Turn off VRR - ([47e0be1](https://github.com/ublue-os/bluefin/commit/47e0be1c6d418f1f050ed1cc7b3d9e171b7ab138))
    - Enable nvidia and vrr again (#455) - ([ce925d1](https://github.com/ublue-os/bluefin/commit/ce925d1d59e46f8b9da17006e59cb47c4140dce5))
    - Remove 2nd cosign layer since upstream provides in RPM (#451) - ([cb2c354](https://github.com/ublue-os/bluefin/commit/cb2c35412fa44c0c9313a36abb6dfc32e5cbdc1f))
    - Remove cosign layer since main upstream provides cosign in RPM (#449) - ([a751f09](https://github.com/ublue-os/bluefin/commit/a751f0999d777a6e673c8db3930127717cdf3ca6))
@@ -543,8 +553,8 @@ All notable changes to this project will be documented in this file.
    - *(ci)* Add a general check (#512) - ([0d2540a](https://github.com/ublue-os/bluefin/commit/0d2540a3a56feda94ce7b9b99489e2648b48273c))
    - *(ci)* Build 1h after main (#502) - ([c611bf9](https://github.com/ublue-os/bluefin/commit/c611bf9b04d9ee4c623be0f7ba1a9ccd73971fd1))
    - *(ci)* Add discussions link to issue template (#467) - ([38ce281](https://github.com/ublue-os/bluefin/commit/38ce2816e8719a96cd0953f799c4612ab764ce14))
-   - *(ci)* We don't need nvidia here - ([eade553](https://github.com/ublue-os/bluefin/commit/eade5531e7857d355d2dbdd76607915dea816fdf))
    - *(ci)* Add default pull.yml file (#433) - ([af12c39](https://github.com/ublue-os/bluefin/commit/af12c39c23fa0ca8777503b678467183151572d5))
+   - *(ci)* We don't need nvidia here - ([eade553](https://github.com/ublue-os/bluefin/commit/eade5531e7857d355d2dbdd76607915dea816fdf))
    - *(ci)* Switch back to free builders (#416) - ([17b90fb](https://github.com/ublue-os/bluefin/commit/17b90fb6ccfb3e74f0958f881332935758d37e62))
    - *(ci)* I guess we need PR checks (#414) - ([c24bb62](https://github.com/ublue-os/bluefin/commit/c24bb62858485447809aab01360aac4956429663))
    - *(ci)* Remove pr check, mq does this (#413) - ([c35b18b](https://github.com/ublue-os/bluefin/commit/c35b18beca1fd6160bd419275d81325f75fd7bb2))
