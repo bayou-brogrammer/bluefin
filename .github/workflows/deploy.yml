@@ -45,13 +45,14 @@ jobs:
       packages: write
       id-token: write
     steps:
-      - name: Git Checkout
+      - name: Checkout Push to Registry action
         uses: actions/checkout@v4
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get -y update
-          sudo apt-get -y install buildah
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          buildkitd-flags: --debug
 
       # Image verification
       - name: Verify base image
@@ -84,28 +85,6 @@ jobs:
           fi
           echo "VERSION=$ver" >> $GITHUB_OUTPUT
 
-      # Workaround bug where capital letters in your GitHub username make it impossible to push to GHCR.
-      # https://github.com/macbre/push-to-ghcr/issues/12
-      - name: Lowercase Registry
-        id: registry_case
-        uses: ASzc/change-string-case-action@v6
-        with:
-          string: ${{ env.IMAGE_REGISTRY }}
-
-      - name: Image Metadata
-        uses: docker/metadata-action@v5
-        id: meta
-        with:
-          images: |
-            ${{ steps.registry_case.outputs.lowercase }}/${{ env.IMAGE_NAME }}
-          labels: |
-            org.opencontainers.image.version=${{ steps.labels.outputs.VERSION }}
-          tags: |
-            type=ref,event=tag
-            type=sha,format=long
-            type=ref,event=branch
-            type=schedule,pattern=nightly
-
       - name: Login to GitHub Container Registry
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
@@ -114,26 +93,64 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Image
-        id: build_image
-        uses: redhat-actions/buildah-build@v2
+      # Setup Caching
+      - name: Cache var-cache-apt
+        id: cache-var-cache-apt
+        uses: actions/cache@v3
         with:
-          oci: false
-          layers: true
-          tags: |
-            ${{steps.meta.outputs.tags}}
+          path: var-cache-apt
+          key: var-cache-apt-${{ hashFiles('Dockerfile') }}
+      - name: Cache var-lib-apt
+        id: cache-var-lib-apt
+        uses: actions/cache@v3
+        with:
+          path: var-lib-apt
+          key: var-lib-apt-${{ hashFiles('Dockerfile') }}
+      - name: inject var-cache-apt into docker
+        uses: reproducible-containers/buildkit-cache-dance@v2.1.4
+        with:
+          cache-source: var-cache-apt
+          cache-target: /var/cache/apt
+          skip-extraction: ${{ steps.cache-var-cache-apt.outputs.cache-hit }}
+      - name: inject var-lib-apt into docker
+        uses: reproducible-containers/buildkit-cache-dance@v2.1.4
+        with:
+          cache-source: var-lib-apt
+          cache-target: /var/lib/apt
+          skip-extraction: ${{ steps.cache-var-lib-apt.outputs.cache-hit }}
+
+      # Metadata
+      - name: Image Metadata
+        uses: docker/metadata-action@v5
+        id: meta
+        with:
+          images: |
+            ${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}
           labels: |
-            ${{ steps.meta.outputs.labels }}
-          containerfiles: |
-            ./Containerfile
+            org.opencontainers.image.version=${{ steps.labels.outputs.VERSION }}
+          tags: |
+            type=ref,event=tag
+            type=sha,format=short
+            type=ref,event=branch
+            type=schedule,pattern=nightly
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          push: ${{ github.event_name != 'pull_request' }}
+          annotations: ${{ steps.meta.outputs.annotations }}
           build-args: |
             IMAGE_NAME=${{ env.IMAGE_NAME }}
             IMAGE_FLAVOR=${{ env.IMAGE_FLAVOR }}
             AKMODS_FLAVOR=${{ env.AKMODS_FLAVOR }}
             IMAGE_VENDOR=${{ github.repository_owner }}
             FEDORA_MAJOR_VERSION=${{ env.FEDORA_MAJOR_VERSION }}
-          extra-args: |
-            --target=${{ env.IMAGE_NAME }}
 
   sign:
     needs: build
@@ -142,7 +159,6 @@ jobs:
     permissions:
       id-token: write
       packages: write
-
     steps:
       - name: Login to GitHub Container Registry
         if: github.event_name != 'pull_request'
@@ -153,7 +169,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: sigstore/cosign-installer@v3
-
       - name: Sign the images
         run: cosign sign -y ${TAGS}
         env:
