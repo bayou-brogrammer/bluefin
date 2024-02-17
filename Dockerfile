@@ -153,7 +153,6 @@ RUN wget https://copr.fedorainfracloud.org/coprs/ganto/lxc4/repo/fedora-"${FEDOR
   wget https://copr.fedorainfracloud.org/coprs/karmab/kcli/repo/fedora-"${FEDORA_MAJOR_VERSION}"/karmab-kcli-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/karmab-kcli-fedora-"${FEDORA_MAJOR_VERSION}".repo && \
   wget https://copr.fedorainfracloud.org/coprs/atim/ubuntu-fonts/repo/fedora-"${FEDORA_MAJOR_VERSION}"/atim-ubuntu-fonts-fedora-"${FEDORA_MAJOR_VERSION}".repo -O /etc/yum.repos.d/atim-ubuntu-fonts-fedora-"${FEDORA_MAJOR_VERSION}".repo
 
-
 COPY dx/etc /etc
 COPY scripts /tmp/scripts
 COPY packages.json /tmp/packages.json
@@ -168,16 +167,6 @@ RUN wget https://desktop.docker.com/linux/main/amd64/137060/docker-desktop-4.27.
   # Docker Compose
   wget https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 -O /tmp/docker-compose && \
   install -c -m 0755 /tmp/docker-compose /usr/bin
-
-# Kind
-RUN curl -Lo ./kind "https://github.com/kubernetes-sigs/kind/releases/latest/download/kind-$(uname)-amd64" && \
-  chmod +x ./kind && \
-  mv ./kind /usr/bin/kind
-
-# Install kns/kctx and add completions for Bash
-RUN wget https://raw.githubusercontent.com/ahmetb/kubectx/master/kubectx -O /usr/bin/kubectx && \
-  wget https://raw.githubusercontent.com/ahmetb/kubectx/master/kubens -O /usr/bin/kubens && \
-  chmod +x /usr/bin/kubectx /usr/bin/kubens
 
 # dx specific files come from the dx directory in this repo
 COPY dx/usr /usr
