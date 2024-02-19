@@ -7,28 +7,28 @@ mkdir -p /usr/etc/containers/systemd/users
 
 # bluefin-cli
 wget --output-document="/usr/etc/containers/systemd/users/bluefin-cli.container" --quiet https://raw.githubusercontent.com/ublue-os/toolboxes/main/quadlets/bluefin-cli/bluefin-cli.container
-cat /usr/share/ublue-os/bluefin-cli/prompt-integration >>/usr/etc/containers/systemd/users/bluefin-cli.container
+cat /usr/share/ublue-os/bluefin-cli/ptyxis-integration >>/usr/etc/containers/systemd/users/bluefin-cli.container
 printf "\n\n[Install]\nWantedBy=bluefin-cli.target" >>/usr/etc/containers/systemd/users/bluefin-cli.container
 sed -i '/AutoUpdate.*/ s/^#*/#/' /usr/etc/containers/systemd/users/bluefin-cli.container
 sed -i 's/ContainerName=bluefin/ContainerName=bluefin-cli/' /usr/etc/containers/systemd/users/bluefin-cli.container
 
 # bluefin-dx-cli
 wget --output-document="/usr/etc/containers/systemd/users/bluefin-dx-cli.container" --quiet https://raw.githubusercontent.com/ublue-os/toolboxes/main/quadlets/bluefin-cli/bluefin-dx-cli.container
-cat /usr/share/ublue-os/bluefin-cli/prompt-integration >>/usr/etc/containers/systemd/users/bluefin-dx-cli.container
+cat /usr/share/ublue-os/bluefin-cli/ptyxis-integration >>/usr/etc/containers/systemd/users/bluefin-dx-cli.container
 printf "\n\n[Install]\nWantedBy=bluefin-dx-cli.target" >>/usr/etc/containers/systemd/users/bluefin-dx-cli.container
 sed -i '/AutoUpdate.*/ s/^#*/#/' /usr/etc/containers/systemd/users/bluefin-dx-cli.container
 sed -i 's/ContainerName=bluefin/ContainerName=bluefin-dx-cli/' /usr/etc/containers/systemd/users/bluefin-dx-cli.container
 
 # wolfi-dx-toolbox
 wget --output-document="/usr/etc/containers/systemd/users/wolfi-dx-toolbox.container" --quiet https://raw.githubusercontent.com/ublue-os/toolboxes/main/quadlets/wolfi-toolbox/wolfi-dx-distrobox-quadlet.container
-cat /usr/share/ublue-os/bluefin-cli/prompt-integration >>/usr/etc/containers/systemd/users/wolfi-dx-toolbox.container
+cat /usr/share/ublue-os/bluefin-cli/ptyxis-integration >>/usr/etc/containers/systemd/users/wolfi-dx-toolbox.container
 printf "\n\n[Install]\nWantedBy=wolfi-dx-toolbox.target" >>/usr/etc/containers/systemd/users/wolfi-dx-toolbox.container
 sed -i '/AutoUpdate.*/ s/^#*/#/' /usr/etc/containers/systemd/users/wolfi-dx-toolbox.container
 sed -i 's/ContainerName=wolfi-quadlet/ContainerName=wolfi-dx-toolbox/' /usr/etc/containers/systemd/users/wolfi-dx-toolbox.container
 
 # orora-cli-toolbox
 wget --output-document="/usr/etc/containers/systemd/users/orora-cli.container" --quiet https://raw.githubusercontent.com/bayou-brogrammer/orora-cli/main/quadlet/orora-cli.container
-cat /usr/share/ublue-os/bluefin-cli/prompt-integration >>/usr/etc/containers/systemd/users/orora-cli.container
+cat /usr/share/ublue-os/bluefin-cli/ptyxis-integration >>/usr/etc/containers/systemd/users/orora-cli.container
 printf "\n\n[Install]\nWantedBy=orora-cli.target" >>/usr/etc/containers/systemd/users/orora-cli.container
 sed -i '/AutoUpdate.*/ s/^#*/#/' /usr/etc/containers/systemd/users/orora-cli.container
 sed -i 's/ContainerName=wolfi-quadlet/ContainerName=orora-cli/' /usr/etc/containers/systemd/users/orora-cli.container
