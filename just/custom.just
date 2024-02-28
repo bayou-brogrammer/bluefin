@@ -9,6 +9,29 @@ benchmark:
 bluefin-cli:
     @/usr/libexec/enable-bluefin-cli.sh
 
+# Install Homebrew | https://brew.sh
+brew:
+    #!/usr/bin/env bash
+    source /usr/lib/ujust/ujust.sh
+    if [[ ! -f "/var/home/linuxbrew/.linuxbrew/bin" || ! -x "/var/home/linuxbrew/.linuxbrew/bin/brew" ]]; then
+        echo "${b}Brew Installation${n}"
+        echo "Please ${b}IGNORE${n} everything the installer tells you to do at the end"
+        echo "We have already done it for you! You just need to close and re-open the terminal after installation"
+        echo "Do you understand?"
+        echo "Please type in \"YES I UNDERSTAND\" and press enter"
+        read ACCEPT
+        if [ "$ACCEPT" == "YES I UNDERSTAND" ]; then
+          /usr/bin/bash -c '/usr/libexec/brew-install'
+        else
+          echo "Capitalization matters when you type \"YES I UNDERSTAND\""
+        fi
+    fi
+
+# Install "fleek" set of packages for brew | none, low, default, high
+brew-fleek level="high":
+    #!/usr/bin/env bash
+    curl --proto '=https' --tlsv1.2 -sSf -L https://brew.getfleek.dev/s/fleek | bash -s -- "{{ level }}"
+
 # Configure Terminal Experience
 [private]
 configure-terminal:
@@ -124,30 +147,6 @@ jetbrains-toolbox:
     echo "Launching JetBrains Toolbox"
     ./jetbrains-toolbox-"${BUILD_VERSION}"/jetbrains-toolbox
 
-# Install garden.io, the Cloud Native DevOps automation platform | https://garden.io
-garden:
-    #!/usr/bin/env bash
-    if ! command -v garden &> /dev/null; then
-        ASSET_URL=$(curl -s https://api.github.com/repos/garden-io/garden/releases/latest | \
-            jq -r '.assets[] | select(.browser_download_url | test("linux-amd64.tar.gz$")) | .browser_download_url')
-        GARDEN_DIR="${HOME}/.garden/bin"
-        TMP_DIR=$(mktemp -d)
-        curl -sSL "$ASSET_URL" | tar -xz -C "$TMP_DIR"
-        mkdir -p "$GARDEN_DIR"
-        mv "$TMP_DIR"/linux-amd64/garden "$GARDEN_DIR"
-        rm -rf "$TMP_DIR"
-
-        echo ""
-        echo "🌺🌻  Garden has been successfully installed 🌷💐"
-        echo ""
-        echo "Add the Garden CLI to your path by adding the following to your .bashrc/.zshrc:"
-        echo ""
-        echo "  export PATH=\$PATH:\$HOME/.garden/bin"
-        echo ""
-        echo "Head over to our documentation for next steps: https://docs.garden.io"
-        echo ""
-    fi
-
 # Install and configure Incus
 incus:
     #!/usr/bin/env bash
@@ -162,27 +161,6 @@ incus:
         echo "Run `just devmode` to turn on Developer mode."
         exit
     fi
-
-# Install nix and Devbox
-nix-devbox:
-    echo 'Setting phasers to kill. Installing nix.'
-    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-    echo 'Installing devbox!'
-    curl -fsSL https://get.jetpack.io/devbox | bash
-    echo 'You MUST reboot to continue'
-
-# Remove nix
-nix-remove:
-    echo 'Setting phasers to stun. Removing nix.'
-    /nix/nix-installer uninstall
-
-# Install nix and Devbox (Global Profile)
-nix-devbox-global:
-    echo 'Installing devbox global profile.'
-    devbox global pull https://devbox.getfleek.dev/high
-    echo 'run "devbox global run install-hook-bash" to configure bash shell'
-    echo 'run "devbox global run install-hook-zsh" to configure zsh shell'
-    echo 'run "devbox global run" to see other available configuration commands'
 
 # Ptyxis terminal transparency
 ptyxis-transparency opacity="0.95":
@@ -221,11 +199,6 @@ touch:
     pip install --upgrade gnome-extensions-cli
     gext install improvedosk@nick-shmyrev.dev
     gext install gestureImprovements@gestures
-
-# Upgrade Distrobox to the latest git version
-distrobox-git:
-    echo 'Installing latest git snapshot of Distrobox'
-    curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh -s -- --next --prefix ~/.local
 
 # Run the yafti setup tool
 yafti:
