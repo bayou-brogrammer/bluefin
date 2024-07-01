@@ -1,36 +1,33 @@
 {
 	"all": {
 		"include": {
-			"bluefin": [
+			"all": [
 				"bash-color-prompt",
 				"bcache-tools",
-				"cockpit-bridge",
+				"bootc",
 				"evtest",
 				"epson-inkjet-printer-escpr",
 				"epson-inkjet-printer-escpr2",
+				"fastfetch",
 				"fish",
 				"firewall-config",
+				"foo2zjs",
 				"gcc",
 				"glow",
 				"gum",
-				"gnome-shell-extension-appindicator",
-				"gnome-shell-extension-blur-my-shell",
-				"gnome-shell-extension-dash-to-dock",
-				"gnome-shell-extension-gsconnect",
-				"gnome-shell-extension-logo-menu",
 				"hplip",
+				"krb5-workstation",
 				"ifuse",
+				"input-leap",
 				"input-remapper",
-				"libgda-sqlite",
-				"libgda",
 				"libimobiledevice",
-				"libratbag-ratbagd",
 				"libxcrypt-compat",
+				"lm_sensors",
 				"make",
 				"mesa-libGLU",
-				"nautilus-gsconnect",
 				"nerd-fonts",
 				"playerctl",
+				"printer-driver-brlaser",
 				"pulseaudio-utils",
 				"python3-pip",
 				"rclone",
@@ -47,12 +44,39 @@
 				"usbmuxd",
 				"wireguard-tools",
 				"xprop",
-				"yaru-theme",
-				"wl-clipboard", 
+				"wl-clipboard",
 				"zsh"
 			],
-			"bluefin-dx": [
+			"silverblue": [
+				"simple-scan",
+				"gnome-shell-extension-appindicator",
+				"gnome-shell-extension-blur-my-shell",
+				"gnome-shell-extension-caffeine",
+				"gnome-shell-extension-dash-to-dock",
+				"gnome-shell-extension-gsconnect",
+				"gnome-shell-extension-logo-menu",
+				"gnome-shell-extension-search-light",
+				"gnome-shell-extension-tailscale-gnome-qs",
+				"libgda-sqlite",
+				"libgda",
+				"libratbag-ratbagd",
+				"nautilus-gsconnect",
+				"nautilus-open-any-terminal",
+				"openssh-askpass",
+				"yaru-theme"
+			],
+			"kinoite": [
+				"skanpage",
+				"libadwaita-qt5",
+				"libadwaita-qt6",
+				"kde-runtime-docs",
+				"kdenetwork-filesharing",
+				"kdeplasma-addons",
+				"plasma-wallpapers-dynamic"
+			],
+			"dx": [
 				"adobe-source-code-pro-fonts",
+				"android-tools",
 				"cascadia-code-fonts",
 				"cockpit-machines",
 				"cockpit-networkmanager",
@@ -65,13 +89,13 @@
 				"code",
 				"containerd.io",
 				"dbus-x11",
-                                "devpod",
-				"distrobuilder",
+				"devpod",
 				"docker-ce",
 				"docker-ce-cli",
 				"docker-buildx-plugin",
 				"docker-compose-plugin",
 				"edk2-ovmf",
+				"flatpak-builder",
 				"genisoimage",
 				"google-droid-sans-mono-fonts",
 				"google-go-mono-fonts",
@@ -89,7 +113,6 @@
 				"p7zip-plugins",
 				"p7zip",
 				"podman-compose",
-				"podman-plugins",
 				"podman-tui",
 				"podmansh",
 				"powerline-fonts",
@@ -103,60 +126,64 @@
 				"qemu-user-binfmt",
 				"qemu-user-static",
 				"qemu",
+				"rocm-hip",
+				"rocm-opencl",
 				"ubuntu-family-fonts",
 				"udica",
 				"virt-manager",
-				"virt-viewer"
+				"virt-viewer",
+				"ydotool"
 			]
 		},
 		"exclude": {
-			"bluefin": [
+			"all": [
 				"firefox-langpacks",
 				"firefox",
-				"gnome-extensions-app",
-				"gnome-software-rpm-ostree",
-				"gnome-tour",
+				"podman-docker",
 				"ublue-os-update-services"
 			],
-			"bluefin-dx": []
-		}
-	},
-	"38": {
-		"include": {
-			"bluefin": [
-				"gnome-shell-extension-tailscale-status"
+			"silverblue": [
+				"gnome-extensions-app",
+				"gnome-software-rpm-ostree",
+				"gnome-terminal-nautilus",
+				"gnome-tour"
 			],
-			"bluefin-dx": [],
-			"bluefin-framework": []
-		},
-		"exclude": {
-			"bluefin": [
-				"podman-docker"
+			"kinoite": [
+				"krfb",
+				"krfb-libs",
+				"plasma-welcome"
 			],
-			"bluefin-dx": []
+			"dx": []
 		}
 	},
 	"39": {
 		"include": {
-			"bluefin": [
-				"gnome-shell-extension-tailscale-gnome-qs",
-				"input-leap",
-				"nautilus-open-any-terminal",
-				"tuned",
-				"tuned-ppd",
-				"tuned-utils",
-				"tuned-profiles-atomic"
-			],
-			"bluefin-dx": [],
-			"bluefin-framework": []
+			"all": [],
+			"silverblue": [],
+			"dx": [
+				"distrobuilder",
+				"podman-plugins"
+			]
 		},
 		"exclude": {
-			"bluefin": [
-				"podman-docker",
-				"gnome-terminal-nautilus"
+			"all": [],
+			"silverblue": [
+				
 			],
-			"bluefin-dx": [],
-			"bluefin-framework": []
+			"dx": []
+		}
+	},
+	"40": {
+		"include": {
+			"all": [],
+			"silverblue": [],
+			"dx": []
+		},
+		"exclude": {
+			"all":	[],
+			"silverblue": [],
+			"dx": []
 		}
 	}
+
 }
